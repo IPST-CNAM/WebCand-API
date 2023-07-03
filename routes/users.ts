@@ -4,10 +4,12 @@ import mariadb from 'mariadb';
 const router = express.Router();
 
 const pool = mariadb.createPool({
-    host: 'localhost',
-    user: 'user',
-    password: 'user',
-    database: 'TestWebcand'
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT),
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
+    connectionLimit: 5, // Adjust as per your requirements
 });
 
 /* GET users listing using mariadb */

@@ -1,13 +1,19 @@
 import express, { Request, Response, NextFunction } from 'express';
 import mariadb from 'mariadb';
+require('dotenv').config();
 
 const router = express.Router();
 
+require('dotenv').config();
+
+
 const pool = mariadb.createPool({
-    host: 'localhost',
-    user: 'user',
-    password: 'user',
-    database: 'TestWebcand'
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT),
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    connectionLimit: 5, // Adjust as per your requirements
 });
 
 /* Return "API is working properly" if connection
