@@ -1,45 +1,39 @@
-import createError from 'http-errors';
-import express, { Request, Response, NextFunction } from 'express';
-import path from 'path';
-import cookieParser from 'cookie-parser';
-import logger from 'morgan';
-import cors from 'cors';
+import express from 'express';
+import dotenv from 'dotenv';
+import candidatRouter from './src/api/routes/candidatRoutes';
+import { setupDatabase } from './src/database/createDatabase';
+import { createTables } from './src/database/createTables/databaseOperations';
+import candidatAdmisRouter from './src/api/routes/candidatAdmis';
+import responsablePedadogique from './src/api/routes/responsablePedadogiqueRoute';
 
-import indexRouter from './routes/index';
-import usersRouter from './routes/users';
-import testAPIRouter from './routes/testAPI';
+dotenv.config();
 
-const app = express();
+setupDatabase
+  .then(() => {
+    // Connexion à la base de données
+    console.log('Connecté à la base de données');
+    createTables()
+    .then(() => {
+    }).catch((error) => {
+      console.error('Erreur lors de la création des tables :', error);
+      throw error;
+    });
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+    // Création de l'application Express
+    const app = express();
+    app.use(express.json());
 
-app.use(cors());
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+    // Routes
+    app.use('/', candidatRouter);
+    app.use('/', candidatAdmisRouter);
+    app.use('/', responsablePedadogique);
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/testAPI', testAPIRouter);
-
-// catch 404 and forward to error handler
-app.use((req: Request, res: Response, next: NextFunction) => {
-    next(createError(404));
-});
-
-// error handler
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-    // render the error page
-    res.status(err.status || 500);
-    res.render('error');
-});
-
-export default app;
+    // Lancement du serveur
+    app.listen(3000, () => {
+      console.log('Serveur en écoute sur le port 3000');
+    });
+  })
+  .catch((error) => {
+    console.error('Erreur lors de la configuration de la base de données :', error);
+  });
+  
