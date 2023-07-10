@@ -1,9 +1,14 @@
-import express, { Request, Response } from 'express';
-const router = express.Router();
+import express, { Request, Response, NextFunction } from 'express';
 
-/* GET home page. */
-router.get('/', (req: Request, res: Response) => {
-  res.render('index', { title: 'Express' });
+const indexRouter = express.Router();
+
+indexRouter.get("/", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    res.send("Express server");
+  }
+  catch (error) {
+    console.log(error);
+  }
 });
 
-export default router;
+export default indexRouter;

@@ -2,9 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import mariadb from 'mariadb';
 require('dotenv').config();
 
-const router = express.Router();
-
-require('dotenv').config();
+const testAPIRouter = express.Router();
 
 
 const pool = mariadb.createPool({
@@ -18,12 +16,12 @@ const pool = mariadb.createPool({
 
 /* Return "API is working properly" if connection
 to mariadb is successful */
-router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+testAPIRouter.get("/", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const conn = await pool.getConnection();
         try {
-            await conn.query("SELECT * FROM users");
-            res.send("API is working properly");
+            await conn.query("SELECT * FROM Candidate");
+            res.send("API is working properly !");
         } catch (err) {
             console.log(err);
         } finally {
@@ -34,4 +32,4 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
     }
 });
 
-export default router
+export default testAPIRouter;
