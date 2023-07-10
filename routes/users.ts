@@ -1,15 +1,15 @@
 import express, {Request, Response, NextFunction} from 'express';
 import mariadb from 'mariadb';
+require('dotenv').config();
 
 const usersRouter = express.Router();
-require('dotenv').config();
 
 const pool = mariadb.createPool({
     host: process.env.DB_HOST,
     port: Number(process.env.DB_PORT),
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
+    database: process.env.DB_NAME,
     connectionLimit: 5, // Adjust as per your requirements
 });
 
@@ -18,7 +18,7 @@ usersRouter.get('/', async (req: Request, res: Response, next: NextFunction) => 
     try {
         const conn = await pool.getConnection();
         try {
-            const rows = await conn.query("SELECT * FROM Candidate");
+            const rows = await conn.query("SELECT * FROM RegisteredUser");
             res.send(rows);
         } catch (err) {
             console.log(err);
