@@ -11,6 +11,7 @@ COPY ./package*.json ./
 COPY ./ ./
 
 # Installe les dépendances du projet
+RUN npm update -g
 RUN npm install
 
 EXPOSE 9000
@@ -21,6 +22,8 @@ ENV DB_PORT=3306
 ENV DB_USER=user
 ENV DB_PASSWORD=user
 ENV DB_NAME=Webcand
+
+RUN npm build
 
 # Exécute la commande pour démarrer l'application
 CMD ["npm", "run", "dev"]
