@@ -20,6 +20,7 @@ candidateRouter.get(
     try {
       const conn = await pool.getConnection();
       try {
+        console.log("selecting");
         const rows = await conn.query("SELECT * FROM Candidate");
         res.send(rows);
       } catch (err) {
