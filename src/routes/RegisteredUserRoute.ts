@@ -9,4 +9,11 @@ router.get(
   "/", registered_user_controller.index
 );
 
+/* create user */
+router.post(
+	"/create",  registered_user_controller.create
+);
+
+
+
 export default router;
