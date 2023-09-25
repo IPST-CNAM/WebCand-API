@@ -13,6 +13,16 @@ import cookieParser from "cookie-parser";
 import indexRouter from "./src/routes/IndexRoute";
 import candidateRouter from "./src/routes/CandidateRoute";
 import registeredUserRouter from "./src/routes/RegisteredUserRoute";
+import admittedCandidateRouter from "./src/routes/AdmittedCandidateRoute";
+import submitOffersRouter from "./src/routes/SubmitOffers";
+import manageOffersRouter from "./src/routes/ManageOffers";
+import editOfferGetRouter from "./src/routes/EditOfferGet";
+import editOfferPutRouter from "./src/routes/EditOfferPut";
+import deleteOfferRouter from "./src/routes/DeleteOffers";
+import getLinkRouter from "./src/routes/GetLinkCerfa";
+import companyInfoRouter from "./src/routes/CompanyInformation";
+import descriptionCompanyRouter from "./src/routes/DescriptionCompany";
+
 
 /* Creating an instance of the Express application and assigning it to the
 variable `app`. The `express()` function returns an Express application object that can be used to
@@ -47,6 +57,15 @@ in `indexRouter` will be executed. */
 app.use("/", indexRouter);
 app.use("/candidates", candidateRouter);
 app.use("/registeredUsers", registeredUserRouter);
+app.use("/candidateAdmitted", admittedCandidateRouter);
+app.use("/submitOffers", submitOffersRouter);
+app.use("/manageOffers", manageOffersRouter);
+app.use("/editOfferGet", editOfferGetRouter);
+app.use("/editOfferPut", editOfferPutRouter);
+app.use("/deleteOffers", deleteOfferRouter);
+app.use("/getLink", getLinkRouter);
+app.use("/getCompanyInfo", companyInfoRouter);
+app.use("/updateCompanyDescription", descriptionCompanyRouter);
 
 app.use(express.json());
 
