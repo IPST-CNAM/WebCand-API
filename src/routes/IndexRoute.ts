@@ -6,7 +6,7 @@ indexRouter.get(
   "/",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.send("Express server");
+      res.send("Express Server Hello World ");
     } catch (error) {
       console.log(error);
     }

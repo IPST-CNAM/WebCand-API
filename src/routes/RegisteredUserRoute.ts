@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction } from "express";
 import mariadb from "mariadb";
 require("dotenv").config();
 
-const registeredUserRouter = express.Router();
+const userRouter = express.Router();
 
 const pool = mariadb.createPool({
   host: process.env.DB_HOST,
@@ -14,23 +14,25 @@ const pool = mariadb.createPool({
 });
 
 /* GET users listing using mariadb */
-registeredUserRouter.get(
+userRouter.get(
   "/",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const conn = await pool.getConnection();
       try {
-        const rows = await conn.query("SELECT * FROM RegisteredUser");
+        const rows = await conn.query("SELECT id_registered_user , email , first_name,  last_name , birth_date, phone_number FROM RegisteredUser");
         res.send(rows);
       } catch (err) {
         console.log(err);
+        res.status(500).send("Erreur serveur");
       } finally {
         conn.end();
       }
     } catch (err) {
       console.log(err);
+      res.status(500).send("Erreur serveur");
     }
   }
 );
 
-export default registeredUserRouter;
+export default userRouter;

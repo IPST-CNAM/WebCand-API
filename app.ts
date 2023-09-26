@@ -13,6 +13,7 @@ import cookieParser from "cookie-parser";
 import indexRouter from "./src/routes/IndexRoute";
 import candidateRouter from "./src/routes/CandidateRoute";
 import registeredUserRouter from "./src/routes/RegisteredUserRoute";
+import getLinkRouterCandidat from "./src/routes/GetLinksCerfaCandidat"
 
 /* Creating an instance of the Express application and assigning it to the
 variable `app`. The `express()` function returns an Express application object that can be used to
@@ -47,6 +48,7 @@ in `indexRouter` will be executed. */
 app.use("/", indexRouter);
 app.use("/candidates", candidateRouter);
 app.use("/registeredUsers", registeredUserRouter);
+app.use("/getGetLinksCerfaCandidat", getLinkRouterCandidat);
 
 app.use(express.json());
 
